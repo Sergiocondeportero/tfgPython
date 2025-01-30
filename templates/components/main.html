@@ -1,0 +1,123 @@
+<main class="container p-4">
+    <!-- Logotipo encima del título -->
+    <div id="logotipo-container" class="text-center mb-4">
+        <img id="logotipo-main" src="{{ url_for('static', filename='logotipo/logotipo.png') }}" alt="Logotipo" class="logotipo">
+    </div>
+
+    <h1 class="display-4 text-center mt-4" style="color: #333; font-size: 3.5rem;">Bienvenido a la Plataforma de Contenidos Audiovisuales</h1>
+    <p class="lead text-center subtitulo" style="color: #333; font-size: 1.25rem;">¡Disfruta de nuestro contenido exclusivo! Inicia sesión o regístrate para comenzar.</p>
+
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #333; font-size: 1.5rem;">Explorar Catálogo</h5>
+                    <p class="card-text" style="color: #333; font-size: 1.1rem;">Descubre las últimas series y películas disponibles.</p>
+                    <a href="/catalogo" class="btn btn-primary" style="font-size: 1.2rem;">Ver más</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Párrafo de Series -->
+    <p class="text-center mt-4" id="disfruta-series" style="color: #333; font-size: 1.2rem;">¡Disfruta de nuestras increíbles películas! Sumérgete en un mundo de entretenimiento.</p>
+
+    <!-- Carrusel de series -->
+    <div id="seriesCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+            {% for serie in series %}
+            <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                <div class="card mx-auto" style="max-width: 30rem; cursor: pointer;" onclick="window.location.href='/catalogo';">
+                    <img src="{{ url_for('static', filename=serie.imagen if serie.imagen else 'imagenesSeries/default.jpg') }}"
+                         class="card-img-top" alt="{{ serie.titulo }}" style="max-height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: #333; font-size: 1.75rem;">{{ serie.titulo }}</h5>
+                        <p class="card-text" style="color: #333; font-size: 1.1rem;">{{ serie.descripcion }}</p>
+                        <small style="color: #333; font-size: 0.9rem;">Año: {{ serie.año }} | Categoría: {{ serie.categoria.nombre }}</small><br>
+                        <small style="color: #333; font-size: 0.9rem;">Temporadas: {{ serie.temporadas }} | Capítulos: {{ serie.capitulos }} | Duración por capítulo: {{ serie.duracionCapitulo }} min</small><br>
+                        <a href="{{ serie.trailer }}" target="_blank" class="btn btn-link" style="font-size: 1.1rem;">Ver Trailer</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#seriesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#seriesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+
+       <!-- Párrafo de Películas -->
+    <p class="text-center mt-4" id="disfruta-peliculas" style="color: #333; font-size: 1.2rem;">¡Y también disfruta de nuestras increíbles series! Vive experiencias únicas con cada una de ellas.</p>
+
+
+    <!-- Carrusel de películas -->
+    <div id="peliculasCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+            {% for pelicula in peliculas %}
+            <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                <div class="card mx-auto" style="max-width: 30rem; cursor: pointer;" onclick="window.location.href='/catalogo';">
+                    <img src="{{ url_for('static', filename=pelicula.imagen if pelicula.imagen else 'imagenesPeliculas/default.jpg') }}"
+                         class="card-img-top" alt="{{ pelicula.titulo }}" style="max-height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: #333; font-size: 1.75rem;">{{ pelicula.titulo }}</h5>
+                        <p class="card-text" style="color: #333; font-size: 1.1rem;">{{ pelicula.descripcion }}</p>
+                        <small style="color: #333; font-size: 0.9rem;">Año: {{ pelicula.año }} | Categoría: {{ pelicula.categoria.nombre }}</small><br>
+                        <small style="color: #333; font-size: 0.9rem;">Duración: {{ pelicula.duracion }} min</small><br>
+                        <a href="{{ pelicula.trailer }}" target="_blank" class="btn btn-link" style="font-size: 1.1rem;">Ver Trailer</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#peliculasCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#peliculasCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+
+</main>
+
+<!-- Estilos adicionales -->
+<style>
+    #disfruta-series, #disfruta-peliculas {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    #seriesCarousel.active ~ #disfruta-series {
+        opacity: 1;
+    }
+
+    #peliculasCarousel.active ~ #disfruta-peliculas {
+        opacity: 1;
+    }
+</style>
+
+<!-- JavaScript para las transiciones y sincronización de carruseles -->
+<script>
+    // Sincroniza los carruseles de series y películas
+    document.getElementById('seriesCarousel').addEventListener('slid.bs.carousel', function () {
+        var activeIndex = $('#seriesCarousel .carousel-item.active').index();
+        $('#peliculasCarousel').carousel(activeIndex);
+    });
+
+    // Asegura que cuando el carrusel de series esté activo, se muestre el párrafo correspondiente
+    document.getElementById('seriesCarousel').addEventListener('slid.bs.carousel', function () {
+        document.getElementById('disfruta-series').style.opacity = 1;
+    });
+
+    // Asegura que cuando el carrusel de películas esté activo, se muestre el párrafo correspondiente
+    document.getElementById('peliculasCarousel').addEventListener('slid.bs.carousel', function () {
+        document.getElementById('disfruta-peliculas').style.opacity = 1;
+    });
+</script>

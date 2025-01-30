@@ -1,0 +1,175 @@
+/* Fondo con gradiente */
+body {
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    min-height: 100vh; /* Asegura que el body ocupe toda la altura disponible */
+    display: flex;
+    flex-direction: column;
+}
+
+/* El contenido principal (main) se expandirá para ocupar el espacio disponible */
+main {
+    flex: 1; /* Esto permite que el contenido ocupe todo el espacio disponible y empuje el footer hacia abajo */
+    padding-top: 50px; /* Asegura espacio adicional en la parte superior */
+    margin: 0; /* Elimina cualquier margen en el main */
+}
+
+/* Asegura que el footer esté pegado al fondo */
+footer {
+    margin-top: auto; /* Esto empuja el footer al fondo cuando el contenido no es suficiente */
+}
+
+/* Estilos para el contenido */
+.titulo {
+    font-family: "Be Vietnam Pro", sans-serif;
+}
+.subtitulo {
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 1.25rem;
+    color: black;
+    font-weight: 500;
+    margin-top: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.row {
+    display: flex;
+    justify-content: center;
+}
+.peliculaMarcada {
+    text-decoration: line-through;
+    color: #cfcfcf;
+}
+.container {
+    max-width: 600px;
+    margin-top: 50px;
+}
+.card {
+    border-radius: 15px;
+}
+.card-header {
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+    font-size: 1.5rem;
+}
+.form-label {
+    font-weight: 500;
+}
+.form-control {
+    border-radius: 10px;
+}
+.btn-primary {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+}
+.btn-link {
+    text-align: center;
+}
+
+/* Estilo para el navbar */
+.navbar {
+    height: 80px; /* Define una altura fija para el navbar */
+    display: flex;
+    align-items: center; /* Centra los elementos verticalmente */
+}
+
+/* Estilo del logotipo en la barra de navegación */
+.navbar-brand img {
+    width: 200px; /* Define el ancho deseado del logotipo */
+    height: 200px; /* Mantén la proporción */
+    filter: brightness(0) invert(1); /* Aplica el color blanco */
+    max-height: 200px; /* Limita la altura máxima para evitar que el logotipo sea más alto que el navbar */
+}
+
+/* Estilo de los enlaces de la barra de navegación */
+.navbar .navbar-nav .nav-link {
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;  /* Evita que los textos se dividan en varias líneas */
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #ddd;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 7h20M5 15h20M5 23h20'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Estilos para la búsqueda en la navbar */
+.navbar .d-flex input.form-control {
+    width: 300px;
+}
+
+/* Ajustes para los elementos del navbar */
+.navbar-nav .nav-item {
+    display: inline-block; /* Asegura que los elementos estén en una sola línea */
+}
+
+/* Para garantizar que todo el contenido esté alineado */
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;  /* Alinea verticalmente */
+    justify-content: center;  /* Centra el contenido horizontalmente */
+}
+
+.navbar-nav .nav-item {
+    margin: 0 10px; /* Agrega espacio entre los elementos del navbar */
+}
+
+/* Estilos generales para las tarjetas */
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Estilos para el logotipo en el main */
+#logotipo-main {
+    width: 80%;  /* Ajusta el logotipo a un 80% del ancho de su contenedor */
+    height: auto;  /* Mantén la proporción de la imagen */
+    margin: 0; /* Elimina cualquier margen en el logotipo */
+    padding: 0; /* Elimina cualquier padding en el logotipo */
+    opacity: 0; /* Inicialmente invisible */
+    transition: opacity 2s ease-in-out; /* Transición suave */
+    max-width: 100%; /* Asegura que la imagen no exceda el ancho de su contenedor */
+}
+
+/* Logotipo visible en el main */
+#logotipo-main.visible {
+    opacity: 1;
+}
+
+/* Eliminar márgenes y paddings del contenedor y logotipo */
+#logotipo-container {
+    margin: 0; /* Elimina el margen del contenedor */
+    padding: 0; /* Elimina el padding del contenedor */
+    height: 300px; /* Ajusta la altura del contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logotipo-main {
+    margin: 0; /* Elimina el margen del logotipo */
+    padding: 0; /* Elimina el padding del logotipo */
+    max-width: 100%; /* Ajusta el tamaño máximo de la imagen */
+}
+
+.texto-oscuro {
+    color: #121212; /* Color muy oscuro cercano al negro */
+}
+
+.texto-destacado {
+    color: #000000; /* Negro puro */
+}

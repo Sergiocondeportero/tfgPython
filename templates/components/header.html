@@ -1,0 +1,101 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Logotipo -->
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='logotipo/logotipo.png') }}" alt="Logotipo">
+            </a>
+
+            <!-- Formulario de búsqueda -->
+            <form action="/catalogo" method="get" class="d-flex ms-auto">
+                <input class="form-control me-2" type="search" placeholder="Buscar por nombre" aria-label="Buscar" name="nombre" value="{{ request.args.get('nombre', '') }}">
+                <button class="btn btn-outline-light" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+            <!-- Botón hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Menú de navegación -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Inicio -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/"><i class="bi bi-house-door"></i> Inicio</a>
+                    </li>
+
+                    <!-- Dropdown para Series y Películas -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-film"></i> Series/Películas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/catalogoSeries"><i class="bi bi-tv"></i> Series</a></li>
+                            <li><a class="dropdown-item" href="/catalogoPeliculas"><i class="bi bi-camera-reels"></i> Películas</a></li>
+                            <li><a class="dropdown-item" href="/catalogo"><i class="bi bi-grid-3x3-gap"></i> Catálogo</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/favoritos"><i class="bi bi-heart"></i> Favoritos</a></li>
+                            <li><a class="dropdown-item" href="/vistos"><i class="bi bi-eye"></i> Vistos</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Estadísticas -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estadisticas">
+                            <i class="bi bi-bar-chart"></i> Estadísticas
+                        </a>
+                    </li>
+
+                    <!-- Gestión para administradores -->
+                    {% if session.get('tipo_usuario') == 'administrador' %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="gestionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-gear"></i> Gestión
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="gestionDropdown">
+                            <li><a class="dropdown-item" href="/usuarios"><i class="bi bi-person-lines-fill"></i> Gestión de usuarios</a></li>
+                            <li><a class="dropdown-item" href="/gestionSeriesPeliculas"><i class="bi bi-file-earmark-film"></i> Gestión de Series y Películas</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    <!-- Perfil de usuario -->
+                    {% if session.get('user_id') %}
+                    <li class="nav-item dropdown d-flex align-items-center">
+                        {% if session.get('imagen') %}
+                            <!-- Imagen de perfil del usuario -->
+                            <img src="{{ url_for('static', filename=session.get('imagen').replace('\\', '/')) }}"
+                                 alt="Imagen de perfil"
+                                 class="rounded-circle"
+                                 style="width: 30px; height: 30px; margin-right: 10px;">
+                        {% else %}
+                            <!-- Imagen predeterminada si no hay imagen personalizada -->
+                            <img src="{{ url_for('static', filename='uploads/default.jpg') }}"
+                                 alt="Imagen de perfil"
+                                 class="rounded-circle"
+                                 style="width: 30px; height: 30px; margin-right: 10px;">
+                        {% endif %}
+                        <!-- Nombre de usuario y menú desplegable -->
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ session.get('username') }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                            <li><a class="dropdown-item" href="/perfil"><i class="bi bi-person-circle"></i> Perfil</a></li>
+                            <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    <!-- Opciones para usuarios no autenticados -->
+                    {% if not session.get('user_id') %}
+                    <li class="nav-item"><a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register"><i class="bi bi-person-plus"></i> Registrarse</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

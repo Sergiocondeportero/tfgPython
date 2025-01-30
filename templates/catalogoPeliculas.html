@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Películas y Series</title>
+
+    <!-- Enlaces a Bootstrap y otros recursos -->
+    <link rel="stylesheet" href="/static/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    {% include 'components/header.html' %}
+    <main class="container my-5">
+        <h1>Catálogo de Películas </h1>
+
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Catálogo de Películas -->
+                {% for pelicula in peliculas %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="{{ url_for('static', filename=pelicula.imagen if pelicula.imagen else 'imagenesPeliculas/default.jpg') }}"
+                                 alt="{{ pelicula.titulo }}" class="card-img-top"
+                                 style="height: 300px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0">{{ pelicula.titulo }}</h5>
+                                    <div class="d-flex">
+                                        <!-- Botón de "Vista" -->
+                                        <form action="/catalogoPeliculas" method="POST" class="d-inline-block mb-0">
+                                            <input type="hidden" name="contenido_id" value="{{ pelicula.id }}">
+                                            <input type="hidden" name="accion" value="vista">
+                                            <button type="submit" class="btn {{ 'text-success' if estado_peliculas[pelicula.id]['vista'] else 'text-muted' }} btn-sm" title="Marcar como vista">
+                                                <i class="fas fa-eye fa-2x"></i>
+                                            </button>
+                                        </form>
+
+                                        <!-- Botón de "Favorita" -->
+                                        <form action="/catalogoPeliculas" method="POST" class="d-inline-block mb-0 ms-2">
+                                            <input type="hidden" name="contenido_id" value="{{ pelicula.id }}">
+                                            <input type="hidden" name="accion" value="favorita">
+                                            <button type="submit" class="btn {{ 'text-warning' if estado_peliculas[pelicula.id]['favorita'] else 'text-muted' }} btn-sm" title="Marcar como favorita">
+                                                <i class="fas fa-star fa-2x"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Información adicional -->
+                                <p class="card-text"><strong>Categoría:</strong> {{ pelicula.categoria.nombre }}</p>
+                                <p class="card-text"><strong>Año:</strong> {{ pelicula.año }}</p>
+                                <p class="card-text"><strong>Director:</strong> {{ pelicula.director }}</p>
+                                <p class="card-text"><strong>Duración:</strong> {{ pelicula.duracion }} minutos</p>
+                                <p class="card-text">{{ pelicula.descripcion }}</p>
+
+                                <!-- Enlace al trailer -->
+                                <a href="{{ pelicula.trailer }}" target="_blank" class="btn btn-primary">Ver Trailer</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'components/footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

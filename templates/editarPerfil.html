@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="static/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Permanent+Marker&display=swap" rel="stylesheet">
+</head>
+<body>
+<main class="container p-4">
+    <h1 class="display-4 text-center mt-4 titulo">Editar Perfil</h1>
+    <div class="row justify-content-center">
+        <div class="card border-primary mt-4" style="max-width: 30rem;">
+            <div class="card-header">Actualizar Información</div>
+            <div class="card-body">
+                <!-- Formulario de edición de perfil -->
+                <form action="/editarPerfil" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="nombreUsuario">Nombre de Usuario</label>
+                        <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" value="{{ usuario.nombreUsuario }}" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" class="form-control" value="{{ usuario.email }}" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Deja vacío para mantener tu contraseña actual">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="imagen">Imagen de Perfil (opcional)</label>
+                        <input type="file" id="imagen" name="imagen" class="form-control">
+                        {% if usuario.imagen %}
+                            <p><strong>Imagen actual:</strong> <img src="{{ url_for('static/perfil', filename=usuario.imagen) }}" alt="Imagen de perfil" width="100"></p>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+                </form>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="alert alert-info mt-3">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+
